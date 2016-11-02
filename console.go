@@ -5,17 +5,17 @@ import (
 	"time"
 )
 
-type TaskPrintln struct {
+type Println struct {
 	TaskBase
 	Content string
 }
 
-func (pl *TaskPrintln)Exec() bool{
+func (pl *Println)Exec() bool{
 	fmt.Println(pl.Content)
 	return true
 }
 
-func (pl *TaskPrintln)String() string {
+func (pl *Println)String() string {
 	return pl.Content
 }
 
@@ -27,7 +27,7 @@ func BuildTaskPrintlnFromString(s string) Task {
 }
 
 
-func NewTaskPrintln() *TaskPrintln {
-	return &TaskPrintln{}
+func NewTaskPrintln() *Println {
+	return &Println{}
 }
 

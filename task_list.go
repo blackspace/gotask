@@ -10,11 +10,11 @@ func NewTaskList() *TaskList {
 }
 
 
-func (tl *TaskList)AddPrepareTask(t Task) {
+func (tl *TaskList)AddTask(t Task) {
 	tl._data =append(tl._data,t)
 }
 
-func (tl *TaskList)GetPrepareTask() Task {
+func (tl *TaskList)GetTask() Task {
 	if len(tl._data)>0 {
 		t:=tl._data[0]
 		tl._data=tl._data[1:]
