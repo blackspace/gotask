@@ -5,12 +5,9 @@ import (
 )
 
 func ExampleTaskPrintln() {
-	tl:=gotasks.NewTaskList()
 	t0:=gotasks.NewTaskPrintln()
 	t0.Content="Hello World"
-	tl.AddTask(t0)
-	t1:=tl.GetTask()
-	t1.Exec()
+	t0.Exec()
 	//Output: Hello World
 }
 
