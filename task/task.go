@@ -38,9 +38,7 @@ func (t *TaskBase)SendResult(r interface{}) {
 }
 
 func (t *TaskBase)ReceiveResult() interface{} {
-	r:=<-t.C
-
-	return r
+	return <-t.C
 }
 
 

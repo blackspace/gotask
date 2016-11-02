@@ -2,11 +2,10 @@ package task
 
 import (
 	"fmt"
-	"time"
 )
 
 type Println struct {
-	TaskBase
+	*TaskBase
 	Content string
 }
 
@@ -21,13 +20,12 @@ func (pl *Println)String() string {
 
 func BuildTaskPrintlnFromString(s string) Task {
 	t:=NewTaskPrintln()
-	t.CreatedAt=time.Now()
 	t.Content=s
 	return t
 }
 
 
 func NewTaskPrintln() *Println {
-	return &Println{}
+	return &Println{TaskBase:NewTaskBase()}
 }
 
