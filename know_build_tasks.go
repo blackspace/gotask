@@ -5,66 +5,66 @@ import (
 	"reflect"
 )
 
-type BuildTaskFunc func (s string) Task
+type BuildFunc func (s string) Task
 
-type BuildFunc struct{
-	ReturenType string
-	BuildFunc BuildTaskFunc
+type Build struct{
+	_type string
+	_func BuildFunc
 }
 
-type TaskSet struct {
-	_data map[string]BuildFunc
+type BuildPool struct {
+	_data map[string]Build
 }
 
-func NewKnowBuildTasks() *TaskSet {
-	return &TaskSet{_data:make(map[string]BuildFunc)}
+func NewBuildPool() *BuildPool {
+	return &BuildPool{_data:make(map[string]Build)}
 }
 
-func (k *TaskSet)Add(n string,t string,b BuildTaskFunc) {
-	k._data[n]=BuildFunc{t,b}
+func (k *BuildPool)Add(n string,t string,b BuildFunc) {
+	k._data[n]= Build{t,b}
 }
 
-func (k *TaskSet)GetByName(s string)  BuildTaskFunc {
+func (k *BuildPool)GetByName(s string) (string,Build,bool) {
 	if b,ok:=k._data[s];ok {
-		return b.BuildFunc
+		return s,b,true
 	} else {
-		return 	nil
+		return "", Build{},false
 	}
 }
 
-func (k *TaskSet)GetByType(s string)  (string,BuildFunc,bool) {
+func (k *BuildPool)GetByType(s string)  (string, Build,bool) {
 	for lk,lv:=range k._data {
-		if lv.ReturenType==s {
+		if lv._type ==s {
 			return lk,lv,true
 		}
 	}
 
-	return "",BuildFunc{},false
+	return "", Build{},false
 }
 
-var buildTaskFuncSet *TaskSet
+var task_set *BuildPool
 
 func init() {
-	buildTaskFuncSet =NewKnowBuildTasks()
+	task_set = NewBuildPool()
 
-	buildTaskFuncSet.Add("Println",reflect.TypeOf((*Println)(nil)).String(),BuildTaskPrintlnFromString)
+	task_set.Add("Println",reflect.TypeOf((*Println)(nil)).String(),BuildTaskPrintlnFromString)
 }
 
 
-func BuildTask(s string) Task {
+func TaskFromString(s string) Task {
 	i:=strings.IndexRune(s,' ')
 	n:=s[:i]
 	a:=s[i+1:]
 
-	if f:= buildTaskFuncSet.GetByName(n);f!=nil {
-		return f(a)
+	if _,b,ok:= task_set.GetByName(n);ok {
+		return b._func(a)
 	} else {
 		panic("Can't build task from "+s)
 	}
 }
 
 func TaskToString(t Task) string {
-	if n,_,ok:=buildTaskFuncSet.GetByType(reflect.TypeOf(t).String());ok {
+	if n,_,ok:= task_set.GetByType(reflect.TypeOf(t).String());ok {
 		return n+" "+t.String()
 	} else {
 		panic("Can't find type "+n)

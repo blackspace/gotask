@@ -16,7 +16,7 @@ func ExampleTaskPrintln() {
 
 
 func ExampleTaskPrintlnFromString() {
-	task:=gotasks.BuildTask("Println"+" "+"Hello World")
+	task:=gotasks.TaskFromString("Println"+" "+"Hello World")
 	task.Exec()
 	//Output: Hello World
 }
@@ -27,7 +27,7 @@ func ExampleTaskPrintlnToString() {
 
 	s:=gotasks.TaskToString(t0)
 
-	task:=gotasks.BuildTask(s)
+	task:=gotasks.TaskFromString(s)
 	task.Exec()
 	//Output: Hello World
 }
