@@ -15,8 +15,19 @@ func (pl *TaskPrintln)Exec() bool{
 	return true
 }
 
+func (pl *TaskPrintln)String() string {
+	return pl.Content
+}
 
-func NewTaskPrintln(s string) *TaskPrintln {
-	return &TaskPrintln{TaskBase:TaskBase{CreatedAt:time.Now()},Content:s}
+func BuildTaskPrintlnFromString(s string) Task {
+	t:=NewTaskPrintln()
+	t.CreatedAt=time.Now()
+	t.Content=s
+	return t
+}
+
+
+func NewTaskPrintln() *TaskPrintln {
+	return &TaskPrintln{}
 }
 

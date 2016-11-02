@@ -1,11 +1,14 @@
 package gotasks
 
-import "time"
+import (
+	"time"
+)
 
 type Task interface {
 	Exec() bool
 	SetStartAt()
 	SetEndAt()
+	String() string
 }
 
 
@@ -22,6 +25,9 @@ func (t *TaskBase)SetStartAt() {
 func (t *TaskBase)SetEndAt() {
 	t.EndAt=time.Now()
 }
+
+
+
 
 
 
