@@ -1,4 +1,4 @@
-package gotasks
+package task
 
 import (
 	"strings"

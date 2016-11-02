@@ -1,4 +1,4 @@
-package gotasks
+package task
 
 import (
 	"fmt"
@@ -10,9 +10,9 @@ type Println struct {
 	Content string
 }
 
-func (pl *Println)Exec() bool{
+func (pl *Println)Exec() interface{} {
 	fmt.Println(pl.Content)
-	return true
+	return nil
 }
 
 func (pl *Println)String() string {

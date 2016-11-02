@@ -1,11 +1,11 @@
 package test
 
 import (
-	"github.com/blackspace/gotasks"
+	. "github.com/blackspace/gotasks/task"
 )
 
 func ExampleTaskPrintln() {
-	t0:=gotasks.NewTaskPrintln()
+	t0:=NewTaskPrintln()
 	t0.Content="Hello World"
 	t0.Exec()
 	//Output: Hello World
@@ -13,18 +13,18 @@ func ExampleTaskPrintln() {
 
 
 func ExampleTaskPrintlnFromString() {
-	task:=gotasks.TaskFromString("Println"+" "+"Hello World")
+	task:=TaskFromString("Println"+" "+"Hello World")
 	task.Exec()
 	//Output: Hello World
 }
 
 func ExampleTaskPrintlnToString() {
-	t0:=gotasks.NewTaskPrintln()
+	t0:=NewTaskPrintln()
 	t0.Content="Hello World"
 
-	s:=gotasks.TaskToString(t0)
+	s:=TaskToString(t0)
 
-	task:=gotasks.TaskFromString(s)
+	task:=TaskFromString(s)
 	task.Exec()
 	//Output: Hello World
 }

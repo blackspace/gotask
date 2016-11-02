@@ -1,4 +1,4 @@
-package gotasks
+package task
 
 
 type TaskPool struct {

@@ -1,11 +1,11 @@
-package gotasks
+package task
 
 import (
 	"time"
 )
 
 type Task interface {
-	Exec() bool
+	Exec() interface{}
 	SetStartAt()
 	SetEndAt()
 	String() string
