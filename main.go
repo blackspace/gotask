@@ -8,33 +8,24 @@ import (
 )
 
 
-var task_pool *task.TaskPool
+var task_channel chan task.Task
 
 // hello world, the web server
 func HelloServer(w http.ResponseWriter, req *http.Request) {
 	t:=task.TaskFromString("HelloWorld")
-	task_pool.AddTask(t)
-
+	task_channel <-t
 	r:=t.ReceiveResult()
-
 	io.WriteString(w, r.(string))
 }
 
 func init() {
-	task_pool=task.NewTaskPool()
+	task_channel =make(chan task.Task,1<<8)
 
 	go func(){
 		for {
-			t:=task_pool.GetTask()
-
-
-			if t!=nil {
-				log.Println(t)
-				r:=t.Exec()
-				t.SendResult(r)
-			}
-
-
+			t:= <-task_channel
+			r:=t.Exec()
+			t.SendResult(r)
 		}
 	}()
 }
