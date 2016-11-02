@@ -5,7 +5,7 @@ type TaskPool struct {
 	_data []Task
 }
 
-func NewTaskList() *TaskPool {
+func NewTaskPool() *TaskPool {
 	return &TaskPool{_data:make([]Task,0,1<<8)}
 }
 

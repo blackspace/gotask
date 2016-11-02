@@ -48,19 +48,31 @@ func init() {
 	task_set = NewBuildPool()
 
 	task_set.Add("Println",reflect.TypeOf((*Println)(nil)).String(),BuildTaskPrintlnFromString)
+	task_set.Add("HelloWorld",reflect.TypeOf((*HelloWorld)(nil)).String(),BuildTaskHelloWorldFromString)
 }
 
 
 func TaskFromString(s string) Task {
 	i:=strings.IndexRune(s,' ')
-	n:=s[:i]
-	a:=s[i+1:]
 
-	if _,b,ok:= task_set.GetByName(n);ok {
-		return b._func(a)
+	if i>0 {
+		n:=s[:i]
+		a:=s[i+1:]
+
+		if _,b,ok:= task_set.GetByName(n);ok {
+			return b._func(a)
+		} else {
+			panic("Can't build task from "+s)
+		}
 	} else {
-		panic("Can't build task from "+s)
+		if _,b,ok:= task_set.GetByName(s);ok {
+			return b._func("")
+		} else {
+			panic("Can't build task from "+s)
+		}
 	}
+
+
 }
 
 func TaskToString(t Task) string {

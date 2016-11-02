@@ -4,7 +4,7 @@ import (
 	. "github.com/blackspace/gotasks/task"
 )
 
-func ExampleTaskPrintln() {
+func ExamplePrintln() {
 	t0:=NewTaskPrintln()
 	t0.Content="Hello World"
 	t0.Exec()
@@ -12,13 +12,13 @@ func ExampleTaskPrintln() {
 }
 
 
-func ExampleTaskPrintlnFromString() {
+func ExamplePrintlnFromString() {
 	task:=TaskFromString("Println"+" "+"Hello World")
 	task.Exec()
 	//Output: Hello World
 }
 
-func ExampleTaskPrintlnToString() {
+func ExamplePrintlnToString() {
 	t0:=NewTaskPrintln()
 	t0.Content="Hello World"
 
