@@ -2,7 +2,7 @@ package test
 
 
 import (
-	"github.com/blackspace/gotasks"
+	"github.com/blackspace/gotask"
 	"testing"
 )
 
