@@ -46,8 +46,6 @@ var task_set *BuildPool
 
 func init() {
 	task_set = NewBuildPool()
-
-	task_set.Add("Println",reflect.TypeOf((*Println)(nil)).String(),BuildTaskPrintlnFromString)
 	task_set.Add("HelloWorld",reflect.TypeOf((*HelloWorld)(nil)).String(),BuildTaskHelloWorldFromString)
 }
 
