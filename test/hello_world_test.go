@@ -2,13 +2,13 @@ package test
 
 
 import (
-	"github.com/blackspace/gotasks/task"
+	"github.com/blackspace/gotasks"
 	"testing"
 )
 
 func TestHelloWorldFromString(t *testing.T) {
-	f := task.NewFactory()
-	f.AddCreatable("HelloWorld",task.HelloWorldCreatable)
+	f := gotask.NewFactory()
+	f.AddCreatable("HelloWorld",gotask.HelloWorldCreatable)
 
 	task:=f.TaskFromString("HelloWorld")
 	r:=task.Exec()
