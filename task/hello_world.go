@@ -2,6 +2,8 @@ package task
 
 import "reflect"
 
+var HelloWorldCreatable = Creatable{reflect.TypeOf((*HelloWorld)(nil)).String(), HelloWorldFromString}
+
 type HelloWorld struct {
 	*TaskBase
 
@@ -25,4 +27,3 @@ func NewHelloWorld() *HelloWorld  {
 	return &HelloWorld {TaskBase:NewTaskBase()}
 }
 
-var HelloWorldCreatable = Creatable{reflect.TypeOf((*HelloWorld)(nil)).String(), HelloWorldFromString}
