@@ -5,26 +5,27 @@ import (
 	"net/http"
 	"log"
 	"github.com/blackspace/gotask"
+	"github.com/blackspace/gotask/hello_world"
 )
 
 
-var task_pool *gotask.TaskPool
+var run_pool *gotask.TaskPool
 
 // hello world, the web server
-func HelloServer(w http.ResponseWriter, req *http.Request) {
-	t:=gotask.NewHelloWorld()
-	task_pool.AddTask(t)
+func Handler(w http.ResponseWriter, req *http.Request) {
+	log.Println(req)
+	t:=hello_world.NewHelloWorld()
+	run_pool.AddTask(t)
 	r:=t.ReceiveResult()
 	io.WriteString(w, r.(string))
 }
 
 func init() {
-	task_pool =gotask.NewTaskPool()
-
-	task_pool.Run()
+	run_pool =gotask.NewTaskPool()
+	run_pool.Run()
 }
 
 func main() {
-	http.HandleFunc("/hello", HelloServer)
+	http.HandleFunc("/", Handler)
 	log.Fatal(http.ListenAndServe(":12345", nil))
 }

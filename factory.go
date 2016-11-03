@@ -8,8 +8,8 @@ import (
 type CreateFunc func (s string) Task
 
 type Creatable struct{
-	_type string
-	_func CreateFunc
+	Type string
+	Func CreateFunc
 }
 
 type Factory struct {
@@ -34,7 +34,7 @@ func (f *Factory)GetCreatableByName(s string) (string, Creatable,bool) {
 
 func (f *Factory)GetCreatableByType(s string)  (string, Creatable,bool) {
 	for lk,lv:=range f._data {
-		if lv._type ==s {
+		if lv.Type ==s {
 			return lk,lv,true
 		}
 	}
@@ -50,13 +50,13 @@ func (f *Factory)TaskFromString(s string) Task {
 		a:=s[i+1:]
 
 		if _,b,ok:= f.GetCreatableByName(n);ok {
-			return b._func(a)
+			return b.Func(a)
 		} else {
 			panic("Can't build task from "+s)
 		}
 	} else {
 		if _,b,ok:= f.GetCreatableByName(s);ok {
-			return b._func("")
+			return b.Func("")
 		} else {
 			panic("Can't build task from "+s)
 		}

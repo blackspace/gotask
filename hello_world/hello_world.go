@@ -1,6 +1,9 @@
-package gotask
+package hello_world
 
-import "reflect"
+import (
+	"reflect"
+	. "github.com/blackspace/gotask"
+)
 
 var HelloWorldCreatable = Creatable{reflect.TypeOf((*HelloWorld)(nil)).String(), HelloWorldFromString}
 
