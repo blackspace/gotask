@@ -12,19 +12,13 @@ var task_channel chan task.Task
 
 // hello world, the web server
 func HelloServer(w http.ResponseWriter, req *http.Request) {
-	t:=factory.TaskFromString("HelloWorld")
+	t:=task.NewHelloWorld()
 	task_channel <-t
 	r:=t.ReceiveResult()
 	io.WriteString(w, r.(string))
 }
 
-var factory * task.Factory
-
 func init() {
-	factory = task.NewFactory()
-	factory.AddCreatable("HelloWorld",task.HelloWorldCreatable)
-
-
 	task_channel =make(chan task.Task,1<<8)
 
 	go func(){
