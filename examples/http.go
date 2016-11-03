@@ -5,21 +5,19 @@ import (
 	"net/http"
 	"log"
 	"github.com/blackspace/gotask"
-	"github.com/blackspace/gotask/dohttp"
 )
 
 
-var runable_pool *gotask.RunablePool=gotask.NewRunablePool()
+var runnable_pool *gotask.RunnablePool =gotask.NewRunnablePool()
 
 func Handler(w http.ResponseWriter, req *http.Request) {
-	log.Println(req)
-	t:=dohttp.NewDoRequest()
+	t:= gotask.NewHttpRequest()
 	t.Request=req
-	io.WriteString(w, (<-runable_pool.AddTask(t)).(string))
+	io.WriteString(w, (<-runnable_pool.AddTask(t)).(string))
 }
 
 func init() {
-	runable_pool.Run()
+	runnable_pool.Run()
 }
 
 func main() {
