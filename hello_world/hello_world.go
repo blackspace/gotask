@@ -16,7 +16,7 @@ func (pl *HelloWorld)Exec() interface{} {
 	return "Hello World"
 }
 
-func (pl *HelloWorld)String() string {
+func (pl *HelloWorld)ToString() string {
 	return "Hello World"
 }
 

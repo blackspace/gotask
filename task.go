@@ -8,7 +8,6 @@ type Task interface {
 	Exec() interface{}
 	SetStartAt()
 	SetEndAt()
-	String() string
 	SendResult(interface{})
 	ReceiveResult() interface{}
 }

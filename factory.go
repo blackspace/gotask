@@ -7,6 +7,10 @@ import (
 
 type CreateFunc func (s string) Task
 
+type StringSerializer interface {
+	ToString() string
+}
+
 type Creatable struct{
 	Type string
 	Func CreateFunc
@@ -67,7 +71,7 @@ func (f *Factory)TaskFromString(s string) Task {
 
 func (f *Factory)TaskToString(t Task) string {
 	if n,_,ok:= f.GetCreatableByType(reflect.TypeOf(t).String());ok {
-		return n+" "+t.String()
+		return n+" "+t.(StringSerializer).ToString()
 	} else {
 		panic("Can't find type "+n)
 	}
