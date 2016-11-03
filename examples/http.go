@@ -11,14 +11,11 @@ import (
 
 var run_pool *gotask.TaskPool
 
-// hello world, the web server
 func Handler(w http.ResponseWriter, req *http.Request) {
 	log.Println(req)
 	t:=dohttp.NewDoRequest()
 	t.Request=req
-	run_pool.AddTask(t)
-	r:=t.ReceiveResult()
-	io.WriteString(w, r.(string))
+	io.WriteString(w, (<-run_pool.AddTask(t)).(string))
 }
 
 func init() {

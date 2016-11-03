@@ -8,8 +8,6 @@ type Task interface {
 	Exec() interface{}
 	SetStartAt()
 	SetEndAt()
-	SendResult(interface{})
-	ReceiveResult() interface{}
 }
 
 
@@ -17,11 +15,10 @@ type TaskBase struct {
 	CreatedAt time.Time
 	StartAt   time.Time
 	EndAt     time.Time
-	C      chan interface{}
 }
 
 func NewTaskBase() *TaskBase{
-	return &TaskBase{CreatedAt:time.Now(),C:make(chan interface{})}
+	return &TaskBase{CreatedAt:time.Now()}
 }
 
 func (t *TaskBase)SetStartAt() {
@@ -30,14 +27,6 @@ func (t *TaskBase)SetStartAt() {
 
 func (t *TaskBase)SetEndAt() {
 	t.EndAt=time.Now()
-}
-
-func (t *TaskBase)SendResult(r interface{}) {
-	t.C<-r
-}
-
-func (t *TaskBase)ReceiveResult() interface{} {
-	return <-t.C
 }
 
 
