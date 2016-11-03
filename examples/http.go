@@ -9,18 +9,17 @@ import (
 )
 
 
-var run_pool *gotask.TaskPool
+var runable_pool *gotask.RunablePool=gotask.NewRunablePool()
 
 func Handler(w http.ResponseWriter, req *http.Request) {
 	log.Println(req)
 	t:=dohttp.NewDoRequest()
 	t.Request=req
-	io.WriteString(w, (<-run_pool.AddTask(t)).(string))
+	io.WriteString(w, (<-runable_pool.AddTask(t)).(string))
 }
 
 func init() {
-	run_pool =gotask.NewTaskPool()
-	run_pool.Run()
+	runable_pool.Run()
 }
 
 func main() {
