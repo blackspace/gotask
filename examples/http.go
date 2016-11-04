@@ -5,13 +5,14 @@ import (
 	"net/http"
 	"log"
 	"github.com/blackspace/gotask"
+	"github.com/blackspace/gotask/examples/task_http"
 )
 
 
 var runnable_pool *gotask.RunnablePool =gotask.NewRunnablePool()
 
 func Handler(w http.ResponseWriter, req *http.Request) {
-	t:= gotask.NewHttpRequest()
+	t:= task_http.NewHttpRequest()
 	t.Request=req
 	io.WriteString(w, (<-runnable_pool.AddTask(t)).(string))
 }

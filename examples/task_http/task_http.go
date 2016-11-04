@@ -1,7 +1,8 @@
-package gotask
+package task_http
 
 import (
 	"net/http"
+	. "github.com/blackspace/gotask"
 )
 
 type HttpRequest struct {

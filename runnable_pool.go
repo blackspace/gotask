@@ -15,7 +15,7 @@ func NewRunnablePool() *RunnablePool {
 }
 
 func (tp *RunnablePool)AddTask(t Task) chan interface{} {
-	c:=make(chan interface{})
+	c:=make(chan interface{},1)
 	tp.Channel<- RunnablePoolItem{c,t}
 	return c
 }
