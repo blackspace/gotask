@@ -1,20 +1,31 @@
 package main
 
 import (
-	"io"
 	"net/http"
 	"log"
 	"github.com/blackspace/gotask"
-	"github.com/blackspace/gotask/examples/task_http"
 )
 
+
+type HttpRequest struct {
+	Request *http.Request
+}
+
+func (r *HttpRequest)Exec() interface{} {
+	return "Hello World"
+}
+
+func NewHttpRequest() *HttpRequest {
+	return &HttpRequest{}
+}
 
 var runnable_pool *gotask.RunnablePool =gotask.NewRunnablePool()
 
 func Handler(w http.ResponseWriter, req *http.Request) {
-	t:= task_http.NewHttpRequest()
+	t:= NewHttpRequest()
 	t.Request=req
-	io.WriteString(w, (<-runnable_pool.AddTask(t)).(string))
+	s:=(<-runnable_pool.AddTask(t)).(string)
+	w.Write([]byte(s))
 }
 
 func init() {

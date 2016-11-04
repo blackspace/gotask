@@ -7,10 +7,7 @@ import (
 
 var HelloWorldCreatable = Creatable{reflect.TypeOf((*HelloWorld)(nil)).String(), HelloWorldFromString}
 
-type HelloWorld struct {
-	*TaskBase
-
-}
+type HelloWorld struct {}
 
 func (pl *HelloWorld)Exec() interface{} {
 	return "Hello World"
@@ -27,6 +24,6 @@ func HelloWorldFromString(s string) Task {
 
 
 func NewHelloWorld() *HelloWorld  {
-	return &HelloWorld {TaskBase:NewTaskBase()}
+	return &HelloWorld {}
 }
 
