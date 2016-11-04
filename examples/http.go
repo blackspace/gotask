@@ -26,6 +26,7 @@ func Handler(w http.ResponseWriter, req *http.Request) {
 	t.Request=req
 	s:=(<-runnable_pool.AddTask(t)).(string)
 	w.Write([]byte(s))
+
 }
 
 func init() {
@@ -33,6 +34,6 @@ func init() {
 }
 
 func main() {
-	http.HandleFunc("/", Handler)
+	http.HandleFunc("/hello", Handler)
 	log.Fatal(http.ListenAndServe(":12345", nil))
 }
