@@ -7,22 +7,22 @@ import (
 )
 
 
-type HttpRequest struct {
+type TaskHelloWorld struct {
 	Request *http.Request
 }
 
-func (r *HttpRequest)Exec() interface{} {
+func (r *TaskHelloWorld)Exec() interface{} {
 	return "Hello World"
 }
 
-func NewHttpRequest() *HttpRequest {
-	return &HttpRequest{}
+func NewTaskHelloWorld() *TaskHelloWorld {
+	return &TaskHelloWorld{}
 }
 
 var runnable_pool *gotask.RunnablePool =gotask.NewRunnablePool()
 
 func Handler(w http.ResponseWriter, req *http.Request) {
-	t:= NewHttpRequest()
+	t:= NewTaskHelloWorld()
 	t.Request=req
 	s:=(<-runnable_pool.AddTask(t)).(string)
 	w.Write([]byte(s))
