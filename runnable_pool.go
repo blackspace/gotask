@@ -24,8 +24,12 @@ func (tp *RunnablePool)Run() {
 	go func(){
 		for {
 			i:= <-tp.Channel
-			r:=i.T.Exec()
-			i.C<-r
+
+			go func() {
+				r:=i.T.Exec()
+				i.C<-r
+			}()
+
 		}
 	}()
 }
