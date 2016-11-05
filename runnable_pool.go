@@ -2,7 +2,7 @@ package gotask
 
 
 type RunnablePool struct {
-	Channel chan RunnablePoolItem
+	_channel chan RunnablePoolItem
 }
 
 type RunnablePoolItem struct {
@@ -11,19 +11,19 @@ type RunnablePoolItem struct {
 }
 
 func NewRunnablePool() *RunnablePool {
-	return &RunnablePool{Channel:make(chan RunnablePoolItem,1<<8)}
+	return &RunnablePool{_channel:make(chan RunnablePoolItem,1<<8)}
 }
 
 func (tp *RunnablePool)AddTask(t Task) chan interface{} {
 	c:=make(chan interface{},1)
-	tp.Channel<- RunnablePoolItem{c,t}
+	tp._channel <- RunnablePoolItem{c,t}
 	return c
 }
 
 func (tp *RunnablePool)Run() {
 	go func(){
 		for {
-			i:= <-tp.Channel
+			i:= <-tp._channel
 
 			go func() {
 				r:=i.T.Exec()
