@@ -10,7 +10,22 @@ var  event_loop *gotask.EventLoop
 
 
 type TickEvent struct {
+	gotask.Event
 	Time time.Time
+}
+
+func (t TickEvent)Fire() {
+	event_loop.AddEvent(TickEvent{Time:time.Now()})
+}
+
+
+type MyTick struct {
+	Tick *time.Ticker
+	TickEvent TickEvent
+}
+
+func NewMyTick() *MyTick {
+	return &MyTick{Tick:time.NewTicker(time.Second)}
 }
 
 func init() {
@@ -19,10 +34,11 @@ func init() {
 
 
 func main() {
-	t:=time.NewTicker(time.Second)
+	t:=NewMyTick()
 	go func() {
 		for {
-			event_loop.AddEvent(TickEvent{<-t.C})
+			_=<-t.Tick.C
+			t.TickEvent.Fire()
 		}
 	}()
 

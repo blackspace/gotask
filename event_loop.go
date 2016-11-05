@@ -5,7 +5,8 @@ import (
 	"fmt"
 )
 
-type Event interface{}
+type Event interface {}
+
 type Handler func(Event)
 
 type Delegate struct {
