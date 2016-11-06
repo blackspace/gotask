@@ -4,7 +4,7 @@ import (
 	. "github.com/blackspace/gotask"
 )
 
-type RunnableChannelPool struct {
+type RunnablePoolChannel struct {
 	_channel chan RunnableChannelPoolItem
 }
 
@@ -13,17 +13,17 @@ type RunnableChannelPoolItem struct {
 	T Task
 }
 
-func NewRunnableChannelPool() *RunnableChannelPool {
-	return &RunnableChannelPool{_channel:make(chan RunnableChannelPoolItem,1<<8)}
+func NewRunnablePoolChannel() *RunnablePoolChannel {
+	return &RunnablePoolChannel{_channel:make(chan RunnableChannelPoolItem,1<<8)}
 }
 
-func (tp *RunnableChannelPool)AddTask(t Task) chan interface{} {
+func (tp *RunnablePoolChannel)AddTask(t Task) chan interface{} {
 	c:=make(chan interface{},1)
 	tp._channel <- RunnableChannelPoolItem{c,t}
 	return c
 }
 
-func (tp *RunnableChannelPool)Run() {
+func (tp *RunnablePoolChannel)Run() {
 	go func(){
 		for {
 			i:= <-tp._channel
