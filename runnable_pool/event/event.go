@@ -5,6 +5,10 @@ import (
 	. "github.com/blackspace/gotask"
 )
 
+const (
+	TaskDoneEvent=iota
+)
+
 type RunnablePoolEvent struct {
 	TaskDoneEvent *goevent.Event
 	_channel      chan Task
@@ -12,7 +16,7 @@ type RunnablePoolEvent struct {
 
 
 func NewRunnablePoolEvent() *RunnablePoolEvent {
-	return &RunnablePoolEvent{TaskDoneEvent:goevent.NewEvent(), _channel:make(chan Task,1<<8)}
+	return &RunnablePoolEvent{TaskDoneEvent:goevent.DefineOrGetEvent(TaskDoneEvent), _channel:make(chan Task,1<<8)}
 }
 
 func (tp *RunnablePoolEvent)AddTask(t Task) {
