@@ -9,6 +9,10 @@ import (
 
 var runnable_pool=event.NewRunnablePoolEvent()
 
+func init() {
+	runnable_pool.Run()
+}
+
 func main() {
 	runnable_pool.TaskDoneEvent.AddHandler(func(s goevent.Source,a goevent.EventArg){
 		switch s.(type) {
@@ -24,6 +28,6 @@ func main() {
 		}
 	}()
 
-	runnable_pool.Run()
+
 	goevent.Run()
 }

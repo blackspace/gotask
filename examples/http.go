@@ -9,9 +9,10 @@ import (
 
 var runnable_pool *channel.RunnablePoolChannel =channel.NewRunnablePoolChannel()
 
+func init() {
+	runnable_pool.Run()
+}
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 func HelloWorldHandler(w http.ResponseWriter, req *http.Request) {
 	s:=(<-runnable_pool.AddTask(tasks.NewHelloWorld())).(string)
 	w.Write([]byte(s))
@@ -22,9 +23,7 @@ func ImageHandler(w http.ResponseWriter, req *http.Request) {
 	w.Write(buf)
 }
 
-func init() {
-	runnable_pool.Run()
-}
+
 
 func main() {
 	http.HandleFunc("/hello", HelloWorldHandler)
