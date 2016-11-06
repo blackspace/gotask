@@ -16,7 +16,7 @@ type RunnablePoolEvent struct {
 
 
 func NewRunnablePoolEvent() *RunnablePoolEvent {
-	return &RunnablePoolEvent{TaskDoneEvent:goevent.DefineOrGetEvent(TaskDoneEvent), _channel:make(chan Task,1<<8)}
+	return &RunnablePoolEvent{TaskDoneEvent:goevent.DefineOrTakeEvent(TaskDoneEvent), _channel:make(chan Task,1<<8)}
 }
 
 func (tp *RunnablePoolEvent)AddTask(t Task) {
