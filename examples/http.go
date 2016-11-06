@@ -3,12 +3,12 @@ package main
 import (
 	"net/http"
 	"log"
-	"github.com/blackspace/gotask"
+	"github.com/blackspace/gotask/runnable_pool/channel"
 	"github.com/fogleman/gg"
 	"bytes"
 )
 
-var runnable_pool *gotask.RunnablePool =gotask.NewRunnablePool()
+var runnable_pool *channel.RunnableChannelPool =channel.NewRunnableChannelPool()
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
