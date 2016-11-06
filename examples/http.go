@@ -7,7 +7,7 @@ import (
 	"github.com/blackspace/gotask/examples/tasks"
 )
 
-var runnable_pool *channel.RunnablePoolChannel =channel.NewRunnablePoolChannel()
+var runnable_pool *channel.RunnablePoolWithChannel =channel.NewRunnablePoolWithChannel()
 
 func init() {
 	runnable_pool.Run()
