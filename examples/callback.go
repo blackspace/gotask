@@ -15,7 +15,7 @@ func init() {
 
 func main() {
 	for {
-		runnable_pool.AddTaskWithCallback(tasks.NewHelloWorld(),func(s goevent.Source,a goevent.EventArg){
+		runnable_pool.AddTask(tasks.NewHelloWorld(),func(s goevent.Source,a goevent.EventArg){
 			log.Println(a.(string))
 		})
 	}
