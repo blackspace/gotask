@@ -23,8 +23,6 @@ func ImageHandler(w http.ResponseWriter, req *http.Request) {
 	w.Write(buf)
 }
 
-
-
 func main() {
 	http.HandleFunc("/hello", HelloWorldHandler)
 	http.HandleFunc("/image", ImageHandler)
