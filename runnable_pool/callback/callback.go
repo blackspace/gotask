@@ -2,6 +2,7 @@ package callback
 
 import (
 	. "github.com/blackspace/gotask"
+	"sync"
 )
 
 
@@ -31,6 +32,7 @@ func (tp *RunnablePoolWithCallback)Run() {
 			i:= <-tp._channel
 
 			r:=i.Exec()
+
 			i.CallbackFun(r)
 		}
 	}()

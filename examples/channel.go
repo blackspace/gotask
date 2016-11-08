@@ -15,7 +15,7 @@ func init() {
 func main() {
 	for {
 		c:=runnable_pool.AddTask(tasks.NewHelloWorld())
-		log.Println((<-c).(string))
+		log.Println((<-c))
 	}
 }
 
