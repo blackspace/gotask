@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/blackspace/goevent"
 	"github.com/blackspace/gotask/runnable_pool/callback"
 	"github.com/blackspace/gotask/examples/tasks"
 	"log"
@@ -15,8 +14,8 @@ func init() {
 
 func main() {
 	for {
-		runnable_pool.AddTask(tasks.NewHelloWorld(),func(s goevent.Source,a goevent.EventArg){
-			log.Println(a.(string))
+		runnable_pool.AddTask(tasks.NewHelloWorld(),func(r interface{}){
+			log.Println(r.(string))
 		})
 	}
 }

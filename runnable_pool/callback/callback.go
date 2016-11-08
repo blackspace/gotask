@@ -1,14 +1,15 @@
 package callback
 
 import (
-	"github.com/blackspace/goevent"
 	. "github.com/blackspace/gotask"
 )
 
 
+type CallbackFun func(result interface{})
+
 type RunnablePoolWithCallbackItem struct {
 	Task
-	*goevent.Event
+	CallbackFun
 }
 
 type RunnablePoolWithCallback struct {
@@ -20,10 +21,8 @@ func NewRunnablePoolWithCallback() *RunnablePoolWithCallback {
 	return &RunnablePoolWithCallback{_channel:make(chan RunnablePoolWithCallbackItem,1<<8)}
 }
 
-func (tp *RunnablePoolWithCallback)AddTask(t Task,h goevent.Handler){
-	e:=goevent.NewEvent()
-	e.AddHandler(h)
-	tp._channel<- RunnablePoolWithCallbackItem{t,e}
+func (tp *RunnablePoolWithCallback)AddTask(t Task,f CallbackFun){
+	tp._channel<- RunnablePoolWithCallbackItem{t,f}
 }
 
 func (tp *RunnablePoolWithCallback)Run() {
@@ -32,7 +31,7 @@ func (tp *RunnablePoolWithCallback)Run() {
 			i:= <-tp._channel
 
 			r:=i.Exec()
-			i.Event.Fire(i,r)
+			i.CallbackFun(r)
 		}
 	}()
 }
