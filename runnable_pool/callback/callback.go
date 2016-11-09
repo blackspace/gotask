@@ -1,8 +1,7 @@
 package callback
 
 import (
-	. "github.com/blackspace/gotask"
-	"sync"
+	. "github.com/blackspace/gotask/task"
 )
 
 

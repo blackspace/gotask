@@ -1,7 +1,7 @@
 package channel
 
 import (
-	. "github.com/blackspace/gotask"
+	. "github.com/blackspace/gotask/task"
 )
 
 type RunnablePoolWithChannel struct {
