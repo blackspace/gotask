@@ -13,12 +13,13 @@ type RunnablePoolWithCallbackItem struct {
 }
 
 type RunnablePoolWithCallback struct {
-	_channel      chan RunnablePoolWithCallbackItem
+	_channel   chan RunnablePoolWithCallbackItem
+	_callbacks chan func()
 }
 
 
 func NewRunnablePoolWithCallback() *RunnablePoolWithCallback {
-	return &RunnablePoolWithCallback{_channel:make(chan RunnablePoolWithCallbackItem,1<<8)}
+	return &RunnablePoolWithCallback{_channel:make(chan RunnablePoolWithCallbackItem,1<<8),_callbacks:make(chan func(),1<<8)}
 }
 
 func (tp *RunnablePoolWithCallback)AddTask(t Task,f CallbackFun){
@@ -26,13 +27,21 @@ func (tp *RunnablePoolWithCallback)AddTask(t Task,f CallbackFun){
 }
 
 func (tp *RunnablePoolWithCallback)Run() {
+	go func() {
+		for {
+			f := <-tp._callbacks
+			f()
+		}
+	}()
+
+
 	go func(){
 		for {
 			i:= <-tp._channel
 
 			r:=i.Exec()
 
-			_callbacks <-func(result interface{},item RunnablePoolWithCallbackItem) func() {
+			tp._callbacks <-func(result interface{},item RunnablePoolWithCallbackItem) func() {
 				return func() {
 					item.CallbackFun(result)
 				}
@@ -44,17 +53,6 @@ func (tp *RunnablePoolWithCallback)Run() {
 	}()
 }
 
-var _callbacks =make(chan func(),1<<8)
-
-func init() {
-	go func() {
-		for {
-			f := <-_callbacks
-			f()
-		}
-	}()
-
-}
 
 
 
