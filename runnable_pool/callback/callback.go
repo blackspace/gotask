@@ -32,8 +32,34 @@ func (tp *RunnablePoolWithCallback)Run() {
 
 			r:=i.Exec()
 
-			i.CallbackFun(r)
+			_callbacks <-func(result interface{},item RunnablePoolWithCallbackItem) func() {
+				return func() {
+					item.CallbackFun(result)
+				}
+
+			}(r,i)
+
+
 		}
 	}()
 }
+
+var _callbacks =make(chan func(),1<<8)
+
+func init() {
+	go func() {
+		for {
+			f := <-_callbacks
+			f()
+		}
+	}()
+
+}
+
+
+
+
+
+
+
 
